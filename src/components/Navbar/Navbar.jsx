@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { NavLink } from "react-router";
 
 const Navbar = () => {
@@ -7,7 +8,6 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        {" "}
         <NavLink to="/products">Products</NavLink>
       </li>
       <li>
@@ -20,7 +20,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100">
+    <div className=" navbar bg-base-200">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -52,7 +52,19 @@ const Navbar = () => {
         <ul className="px-1 menu menu-horizontal">{links}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <div className="flex gap-2">
+          <Link to={'/login'}><button
+            className="w-full px-4 py-2 text-white bg-blue-400 rounded-md hover:bg-blue-600 focus:outline-none "
+          >
+            Signin
+          </button></Link>
+          <Link to={'/register'}>
+          <button
+            className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none"
+          >
+            Signout
+          </button></Link>
+        </div>
       </div>
     </div>
   );
