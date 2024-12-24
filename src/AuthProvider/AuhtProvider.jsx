@@ -1,11 +1,11 @@
-// import { createUserWithEmailAndPassword, getAuth } from "firebase/auth/web-extension";
+// import {  } from "firebase/auth/web-extension";
 // import { createContext, useEffect, useState } from "react"
 // import { app } from "../firebase/firebase.config";
 // import { GoogleAuthProvider, onAuthStateChanged, 
 //   signInWithEmailAndPassword, signOut  } from "firebase/auth/cordova";
 // import axios from "axios";
 
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signOut } from "firebase/auth/cordova";
+import {  createUserWithEmailAndPassword, getAuth,GoogleAuthProvider ,  onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { app } from "../firebase-config/firebase";
 import { createContext } from "react";
 import { useState } from "react";
@@ -46,22 +46,10 @@ const AuthProvider = ({children}) => {
     useEffect(()=>{
       const unsubscribe = onAuthStateChanged(auth, currentUser =>{
         setUser(currentUser);
-        if(currentUser){
-          axios.post(`http://localhost:4000/authentication`, {
-            email:currentUser.email
-          }).then((data)=>{
-            if(data.data){
-              localStorage.setItem('access-token', data?.data?.token)
-              setLoading(false);
-            }
-          })
-        }
-        else{
-          localStorage.removeItem('access-token');
-          setLoading(false);
-        }
+        setLoading(false)
+        console.log(currentUser)
       });
-      
+
       return (
         ()=>{
         return unsubscribe();

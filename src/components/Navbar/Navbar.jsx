@@ -1,7 +1,10 @@
 import { Link } from "react-router";
 import { NavLink } from "react-router";
+import useAuth from './../../hooks/useAuth';
+import UserDropdown from "./UserDropdown";
 
 const Navbar = () => {
+  const {user} = useAuth();
   const links = (
     <>
       <li>
@@ -51,21 +54,15 @@ const Navbar = () => {
       <div className="hidden navbar-center lg:flex">
         <ul className="px-1 menu menu-horizontal">{links}</ul>
       </div>
-      <div className="navbar-end">
-        <div className="flex gap-2">
-          <Link to={'/login'}><button
-            className="w-full px-4 py-2 text-white bg-blue-400 rounded-md hover:bg-blue-600 focus:outline-none "
-          >
-            Signin
-          </button></Link>
-          <Link to={'/register'}>
-          <button
-            className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none"
-          >
-            Signout
-          </button></Link>
-        </div>
-      </div>
+      {  user ? <div className="navbar-end"> <UserDropdown/> </div> : <div className="navbar-end">
+    <div className="flex items-center gap-2">
+      <Link to={"/login"}><button className="w-full px-4 py-2 text-white bg-blue-400 rounded-md hover:bg-blue-600 focus:outline-none">
+      Login</button></Link>
+      <Link to={"/register"}><button className="w-full px-4 py-2 text-white bg-blue-400 rounded-md hover:bg-blue-600 focus:outline-none">Register</button></Link>
+    </div>
+  </div> 
+  }
+
     </div>
   );
 };
