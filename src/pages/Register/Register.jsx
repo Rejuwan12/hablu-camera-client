@@ -11,7 +11,7 @@ import { useNavigate } from "react-router";
 // import Swal from 'sweetalert2';
 
 const Register = () => {
-    const {CreateUser} = useAuth();
+  const { CreateUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -25,21 +25,21 @@ const Register = () => {
     const status = role === "buyer" ? "approved" : "pending";
     const wishList = [];
     const userData = { email, role, status, wishList };
-    console.log(userData)
-    CreateUser(data.email, data.password).then(()=>{
-      axios.post('http://localhost:4000/users', userData).then((res)=>{
-        if(res.data.insertedId){
+    console.log(userData);
+    CreateUser(data.email, data.password).then(() => {
+      axios.post("http://localhost:4000/users", userData).then((res) => {
+        if (res.data.insertedId) {
           Swal.fire({
             position: "center",
             icon: "success",
             title: "Registration Successfully",
             showConfirmButton: false,
-            timer: 1500
+            timer: 1500,
           });
-        };
-        navigate('/')
-      })
-    })
+        }
+        navigate("/");
+      });
+    });
     //
     // console.log(userData)
   };
@@ -76,7 +76,24 @@ const Register = () => {
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
-                {...register("password", { required: true, minLength: 8, })}
+                {...register("password", {
+                  required: true,
+                  minLength: 8,
+                  validate: {
+                    hasUppercase: (value) =>
+                      /[A-Z]/.test(value) ||
+                      "Password must include at least one uppercase letter.",
+                    hasLowercase: (value) =>
+                      /[a-z]/.test(value) ||
+                      "Password must include at least one lowercase letter.",
+                    hasNumber: (value) =>
+                      /[0-9]/.test(value) ||
+                      "Password must include at least one number.",
+                    hasSpecialChar: (value) =>
+                      /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+                      "Password must include at least one special character.",
+                  },
+                })}
               />
               {errors.password?.type === "required" && (
                 <p className="text-sm font-light text-red-500">
@@ -88,7 +105,6 @@ const Register = () => {
                   Password must have at 8 characters
                 </p>
               )}
-              
             </div>
             <div className="form-control">
               <label className="label">
