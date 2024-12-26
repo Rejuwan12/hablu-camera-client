@@ -7,7 +7,7 @@ const LoadingPage = () => {
       <HashLoader
         color='000000'
         loading={true}
-        size={150}     
+        size={80}     
       />
     </div>
     );
